@@ -15,7 +15,8 @@
       "Type": "String"
     },
     "APIPath": {
-      "Description": "The relative path for the applciation load balancer routing rule",
+      "Description":
+      "The relative path for the applciation load balancer routing rule. Must use param 'CreateAPI' to be applied.",
       "Type": "String"
     },
     "DesiredCapacity": {
