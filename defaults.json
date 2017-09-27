@@ -33,11 +33,11 @@
   "CREATE_API": {
     "type": "property",
     "key": "CREATE_API",
-    "default": "false"
+    "default": false
   },
   "DEFAULT_LOAD_BALANCER_TARGET": {
     "type": "property",
     "key": "DEFAULT_LOAD_BALANCER_TARGET",
-    "default": "false"
+    "default": false
   }
 }
