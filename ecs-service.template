@@ -15,8 +15,7 @@
       "Type": "String"
     },
     "APIPath": {
-      "Description":
-      "The relative path for the applciation load balancer routing rule. Must use param 'CreateAPI' to be applied.",
+      "Description": "The relative path for the applciation load balancer routing rule. Must use param 'CreateAPI' to be applied.",
       "Type": "String"
     },
     "DesiredCapacity": {
@@ -223,27 +222,27 @@
           "Ref": "DesiredCapacity"
         },
         "LoadBalancers": [
-              {
-                "ContainerName": {
-                  "Fn::Sub": "${AWS::StackName}-Container"
+          {
+            "ContainerName": {
+              "Fn::Sub": "${AWS::StackName}-Container"
+            },
+            "ContainerPort": {
+              "Ref": "ContainerPort"
+            },
+            "TargetGroupArn": {
+              "Fn::If": [
+                "CreateListener",
+                {
+                  "Ref": "APITargetGroup"
                 },
-                "ContainerPort": {
-                  "Ref": "ContainerPort"
-                },
-                "TargetGroupArn": {
-                  "Fn::If": [
-                    "CreateListener",
-                    {
-                      "Ref": "APITargetGroup"
-                    },
-                    {
-                      "Fn::ImportValue": {
-                        "Fn::Sub": "${ClusterStack}-DefaultTargetGroup"
-                      }
-                    }
-                  ]
+                {
+                  "Fn::ImportValue": {
+                    "Fn::Sub": "${ClusterStack}-DefaultTargetGroup"
+                  }
                 }
-              }
+              ]
+            }
+          }
         ],
         "Role": {
           "Ref": "ServiceIAMRole"
@@ -342,7 +341,15 @@
     "ECSService": {
       "Description": "The service name of the  contribution api",
       "Value": {
-        "Ref": "Service"
+        "Fn::If": [
+          "AttachLoadBalancer",
+          {
+            "Ref": "ELBService"
+          },
+          {
+            "Ref": "Service"
+          }
+        ]
       },
       "Export": {
         "Name": {
@@ -353,9 +360,20 @@
     "ECSServiceName": {
       "Description": "The service name of the  contribution api",
       "Value": {
-        "Fn::GetAtt": [
-          "Service",
-          "Name"
+        "Fn::If": [
+          "AttachLoadBalancer",
+          {
+            "Fn::GetAtt": [
+              "ELBService",
+              "Name"
+            ]
+          },
+          {
+            "Fn::GetAtt": [
+              "Service",
+              "Name"
+            ]
+          }
         ]
       },
       "Export": {
