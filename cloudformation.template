@@ -200,7 +200,6 @@
     },
     "ELBService": {
       "Type": "AWS::ECS::Service",
-      "Condition": "AttachLoadBalancer",
       "Properties": {
         "LoadBalancers": {
           "Fn::If": [
