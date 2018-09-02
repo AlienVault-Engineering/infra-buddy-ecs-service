@@ -49,6 +49,10 @@
     "DefaultLoadBalancerTarget": {
       "Description": "'true' to attach to the load balancer as the default target.",
       "Type": "String"
+    },
+    "UseFargate": {
+      "Description": "'true' to use fargate, 'false' to a cluster.",
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -75,6 +79,18 @@
         },
         {
           "Condition": "AttachDefault"
+        }
+      ]
+    },
+    "UseCluster": {
+      "Fn::Not": [
+        {
+          "Fn::Equals": [
+            {
+              "Ref": "UseFargate"
+            },
+            "true"
+          ]
         }
       ]
     }
@@ -243,10 +259,55 @@
             }
           ]
         },
+        "LaunchType": {
+          "Fn::If": [
+            "UseCluster",
+            "EC2",
+            "FARGATE"
+          ]
+        },
         "Cluster": {
-          "Fn::ImportValue": {
-            "Fn::Sub": "${ClusterStack}-ECSCluster"
-          }
+          "Fn::If": [
+            "UseCluster",
+            {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${ClusterStack}-ECSCluster"
+              }
+            },
+            {
+              "Ref": "AWS::NoValue"
+            }
+          ]
+        },
+        "NetworkConfiguration": {
+          "Fn::If": [
+            "UseCluster",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            {
+              "AwsvpcConfiguration": {
+                "AssignPublicIp": "DISABLED",
+                "Subnets": [
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${VPCStack}-SubnetAPub"
+                    }
+                  },
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${VPCStack}-SubnetBPub"
+                    }
+                  },
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${VPCStack}-SubnetCPub"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         },
         "DeploymentConfiguration": {
           "MaximumPercent": 600,
@@ -306,6 +367,9 @@
                 },
                 "awslogs-region": {
                   "Ref": "AWS::Region"
+                },
+                "awslogs-stream-prefix": {
+                  "Fn::Sub": "${AWS::StackName}"
                 }
               }
             }

@@ -35,6 +35,11 @@
     "key": "CREATE_API",
     "default": false
   },
+  "USE_FARGATE": {
+    "type": "property",
+    "key": "USE_FARGATE",
+    "default": false
+  },
   "DEFAULT_LOAD_BALANCER_TARGET": {
     "type": "property",
     "key": "DEFAULT_LOAD_BALANCER_TARGET",

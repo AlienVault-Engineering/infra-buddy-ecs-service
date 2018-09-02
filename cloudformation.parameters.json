@@ -48,5 +48,9 @@
     {
         "ParameterKey": "DefaultLoadBalancerTarget",
         "ParameterValue": "${DEFAULT_LOAD_BALANCER_TARGET}"
+    },
+    {
+        "ParameterKey": "UseFargate",
+        "ParameterValue": "${USE_FARGATE}"
     }
 ]
