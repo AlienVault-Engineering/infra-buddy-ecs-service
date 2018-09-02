@@ -77,13 +77,6 @@
           "Condition": "AttachDefault"
         }
       ]
-    },
-    "NotAttachLoadBalancer": {
-      "Fn::Not": [
-        {
-          "Condition": "AttachLoadBalancer"
-        }
-      ]
     }
   },
   "Resources": {
@@ -209,53 +202,48 @@
       "Type": "AWS::ECS::Service",
       "Condition": "AttachLoadBalancer",
       "Properties": {
-        "Cluster": {
-          "Fn::ImportValue": {
-            "Fn::Sub": "${ClusterStack}-ECSCluster"
-          }
-        },
-        "DeploymentConfiguration": {
-          "MaximumPercent": 600,
-          "MinimumHealthyPercent": 50
-        },
-        "DesiredCount": {
-          "Ref": "DesiredCapacity"
-        },
-        "LoadBalancers": [
-          {
-            "ContainerName": {
-              "Fn::Sub": "${AWS::StackName}-Container"
-            },
-            "ContainerPort": {
-              "Ref": "ContainerPort"
-            },
-            "TargetGroupArn": {
-              "Fn::If": [
-                "CreateListener",
-                {
-                  "Ref": "APITargetGroup"
+        "LoadBalancers": {
+          "Fn::If": [
+            "AttachLoadBalancer",
+            [
+              {
+                "ContainerName": {
+                  "Fn::Sub": "${AWS::StackName}-Container"
                 },
-                {
-                  "Fn::ImportValue": {
-                    "Fn::Sub": "${ClusterStack}-DefaultTargetGroup"
-                  }
+                "ContainerPort": {
+                  "Ref": "ContainerPort"
+                },
+                "TargetGroupArn": {
+                  "Fn::If": [
+                    "CreateListener",
+                    {
+                      "Ref": "APITargetGroup"
+                    },
+                    {
+                      "Fn::ImportValue": {
+                        "Fn::Sub": "${ClusterStack}-DefaultTargetGroup"
+                      }
+                    }
+                  ]
                 }
-              ]
+              }
+            ],
+            {
+              "Ref": "AWS::NoValue"
             }
-          }
-        ],
-        "Role": {
-          "Ref": "ServiceIAMRole"
+          ]
         },
-        "TaskDefinition": {
-          "Ref": "TaskDefinition"
-        }
-      }
-    },
-    "Service": {
-      "Type": "AWS::ECS::Service",
-      "Condition": "NotAttachLoadBalancer",
-      "Properties": {
+        "Role": {
+          "Fn::If": [
+            "AttachLoadBalancer",
+            {
+              "Ref": "ServiceIAMRole"
+            },
+            {
+              "Ref": "AWS::NoValue"
+            }
+          ]
+        },
         "Cluster": {
           "Fn::ImportValue": {
             "Fn::Sub": "${ClusterStack}-ECSCluster"
@@ -341,15 +329,7 @@
     "ECSService": {
       "Description": "The service name of the  contribution api",
       "Value": {
-        "Fn::If": [
-          "AttachLoadBalancer",
-          {
-            "Ref": "ELBService"
-          },
-          {
-            "Ref": "Service"
-          }
-        ]
+        "Ref": "ELBService"
       },
       "Export": {
         "Name": {
@@ -360,20 +340,9 @@
     "ECSServiceName": {
       "Description": "The service name of the  contribution api",
       "Value": {
-        "Fn::If": [
-          "AttachLoadBalancer",
-          {
-            "Fn::GetAtt": [
-              "ELBService",
-              "Name"
-            ]
-          },
-          {
-            "Fn::GetAtt": [
-              "Service",
-              "Name"
-            ]
-          }
+        "Fn::GetAtt": [
+          "ELBService",
+          "Name"
         ]
       },
       "Export": {
