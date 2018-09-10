@@ -35,11 +35,11 @@
       "Type": "Number"
     },
     "TaskMemory": {
-      "Description": "The amount of memory for use by the task",
+      "Description": "The amount of memory for use by the task, if using fargate you must specify 0.5GB, 1GB - 30GB, otherwise use MB",
       "Type": "Number"
     },
     "TaskCPU": {
-      "Description": "The amount of cpu units (see ecs) for use by the task",
+      "Description": "The amount of cpu units (see ecs) for use by the task, specified in 1024ths of the vCPU. If using fargate you must choose 256, 512, 1024, 2048, 4096",
       "Type": "Number"
     },
     "CreateAPI": {
@@ -326,6 +326,46 @@
       "Properties": {
         "Family": {
           "Fn::Sub": "${AWS::StackName}-ECSTaskFamily"
+        },
+        "Memory": {
+          "Fn::If": [
+            "UseCluster",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            {
+              "Ref": "TaskMemory"
+            }
+          ]
+        },
+        "Cpu": {
+          "Fn::If": [
+            "UseCluster",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            {
+              "Ref": "TaskCPU"
+            }
+          ]
+        },
+        "RequiresCompatibilities": {
+          "Fn::If": [
+            "UseCluster",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            "FARGATE"
+          ]
+        },
+        "NetworkMode": {
+          "Fn::If": [
+            "UseCluster",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            "awsvpc"
+          ]
         },
         "ContainerDefinitions": [
           {

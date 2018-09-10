@@ -6,9 +6,10 @@
     "func_name": "rule_priority"
   },
   "TASK_CPU": {
-    "type": "property",
+    "type": "transform",
     "key": "TASK_CPU",
-    "default": 64
+    "default": 64,
+    "func_name": "transform_fargate_cpu"
   },
   "DESIRED_CAPACITY": {
     "type": "property",
@@ -16,9 +17,10 @@
     "default": 1
   },
   "TASK_SOFT_MEMORY": {
-    "type": "property",
+    "type": "transform",
     "key": "TASK_SOFT_MEMORY",
-    "default": 512
+    "default": 512,
+    "func_name": "transform_fargate_memory"
   },
   "CONTAINER_PORT": {
     "type": "property",
