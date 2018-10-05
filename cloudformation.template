@@ -51,6 +51,10 @@
       "Type": "String"
     },
     "UseFargate": {
+      "AllowedValues": [
+        "true",
+        "false"
+      ],
       "Description": "'true' to use fargate, 'false' to a cluster.",
       "Type": "String"
     }

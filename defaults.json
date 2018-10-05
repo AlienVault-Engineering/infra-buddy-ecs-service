@@ -40,7 +40,7 @@
   "USE_FARGATE": {
     "type": "property",
     "key": "USE_FARGATE",
-    "default": false
+    "default": "false"
   },
   "DEFAULT_LOAD_BALANCER_TARGET": {
     "type": "property",
