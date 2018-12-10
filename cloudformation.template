@@ -295,17 +295,9 @@
           ]
         },
         "Cluster": {
-          "Fn::If": [
-            "UseCluster",
-            {
-              "Fn::ImportValue": {
-                "Fn::Sub": "${ClusterStack}-ECSCluster"
-              }
-            },
-            {
-              "Ref": "AWS::NoValue"
-            }
-          ]
+          "Fn::ImportValue": {
+            "Fn::Sub": "${ClusterStack}-ECSCluster"
+          }
         },
         "NetworkConfiguration": {
           "Fn::If": [
@@ -377,14 +369,14 @@
             }
           ]
         },
-        "ExecutionRoleArn":{
-          "Fn::If":[
+        "ExecutionRoleArn": {
+          "Fn::If": [
             "UseCluster",
             {
               "Ref": "AWS::NoValue"
-            }                     ,
+            },
             {
-              "Ref":"TaskIAMRole"
+              "Ref": "TaskIAMRole"
             }
           ]
         },
@@ -394,7 +386,9 @@
             {
               "Ref": "AWS::NoValue"
             },
-            ["FARGATE"]
+            [
+              "FARGATE"
+            ]
           ]
         },
         "NetworkMode": {
