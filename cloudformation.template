@@ -280,7 +280,15 @@
           "Fn::If": [
             "AttachLoadBalancer",
             {
-              "Ref": "ServiceIAMRole"
+              "Fn::If": [
+                "UseCluster",
+                {
+                  "Ref": "ServiceIAMRole"
+                },
+                {
+                  "Ref": "AWS::NoValue"
+                }
+              ]
             },
             {
               "Ref": "AWS::NoValue"
