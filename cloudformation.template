@@ -36,7 +36,7 @@
     },
     "TaskMemory": {
       "Description": "The amount of memory for use by the task, if using fargate you must specify 0.5GB, 1GB - 30GB, otherwise use MB",
-      "Type": "String"
+      "Type": "Number"
     },
     "TaskCPU": {
       "Description": "The amount of cpu units (see ecs) for use by the task, specified in 1024ths of the vCPU. If using fargate you must choose 256, 512, 1024, 2048, 4096",
