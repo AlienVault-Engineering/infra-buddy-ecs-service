@@ -359,7 +359,7 @@
             {
               "Ref": "AWS::NoValue"
             },
-            "FARGATE"
+            ["FARGATE"]
           ]
         },
         "NetworkMode": {
