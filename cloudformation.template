@@ -328,17 +328,17 @@
                 "Subnets": [
                   {
                     "Fn::ImportValue": {
-                      "Fn::Sub": "${VPCStack}-SubnetAPub"
+                      "Fn::Sub": "${VPCStack}-SubnetAPriv"
                     }
                   },
                   {
                     "Fn::ImportValue": {
-                      "Fn::Sub": "${VPCStack}-SubnetBPub"
+                      "Fn::Sub": "${VPCStack}-SubnetBPriv"
                     }
                   },
                   {
                     "Fn::ImportValue": {
-                      "Fn::Sub": "${VPCStack}-SubnetCPub"
+                      "Fn::Sub": "${VPCStack}-SubnetCPriv"
                     }
                   }
                 ]
