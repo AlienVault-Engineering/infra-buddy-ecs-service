@@ -177,10 +177,10 @@
         "TargetType": {
           "Fn::If": [
             "UseCluster",
-            "ip",
             {
               "Ref": "AWS::NoValue"
-            }
+            },
+            "ip"
           ]
         },
         "TargetGroupAttributes": [
