@@ -218,6 +218,30 @@
         "Path": "/"
       }
     },
+    "TaskIAMRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ecs-tasks.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+        ],
+        "Path": "/"
+      }
+    },
     "ELBService": {
       "Type": "AWS::ECS::Service",
       "Properties": {
@@ -350,6 +374,17 @@
             },
             {
               "Ref": "TaskCPU"
+            }
+          ]
+        },
+        "ExecutionRoleArn":{
+          "Fn::If":[
+            "UseCluster",
+            {
+              "Ref": "AWS::NoValue"
+            }                     ,
+            {
+              "Ref":"TaskIAMRole"
             }
           ]
         },
