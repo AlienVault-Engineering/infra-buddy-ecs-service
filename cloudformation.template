@@ -97,6 +97,11 @@
           ]
         }
       ]
+    },
+    "UseFargateCondition": {
+      "Fn::Not": {
+        "Ref": "UseCluster"
+      }
     }
   },
   "Resources": {
@@ -325,6 +330,11 @@
             {
               "AwsvpcConfiguration": {
                 "AssignPublicIp": "DISABLED",
+                "SecurityGroups": [
+                  {
+                    "Ref": "FargateSecurityGroup"
+                  }
+                ],
                 "Subnets": [
                   {
                     "Fn::ImportValue": {
@@ -356,6 +366,34 @@
         "TaskDefinition": {
           "Ref": "TaskDefinition"
         }
+      }
+    },
+    "FargateSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Condition": "UseFargateCondition",
+      "Properties": {
+        "GroupDescription": "Fargate Security Group",
+        "VpcId": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${VPCStack}-VPC"
+          }
+        },
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "0",
+            "ToPort": "65535",
+            "CidrIp": "10.0.0.0/8"
+          }
+        ],
+        "SecurityGroupEgress": [
+          {
+            "IpProtocol": "-1",
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "1",
+            "ToPort": "65535"
+          }
+        ]
       }
     },
     "TaskDefinition": {
