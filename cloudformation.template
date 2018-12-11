@@ -383,10 +383,12 @@
         },
         "SecurityGroupIngress": [
           {
-            "IpProtocol": "tcp",
-            "FromPort": "0",
-            "ToPort": "65535",
-            "CidrIp": "10.0.0.0/8"
+            "IpProtocol": "-1",
+            "SourceSecurityGroupId": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${ClusterStack}-LoadBalancerSecurityGroupARN"
+              }
+            }
           }
         ],
         "SecurityGroupEgress": [
