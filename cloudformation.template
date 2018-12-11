@@ -99,10 +99,11 @@
       ]
     },
     "UseFargateCondition": {
-      "Fn::Not": [
+      "Fn::Equals": [
         {
-          "Ref": "UseCluster"
-        }
+          "Ref": "UseFargate"
+        },
+        "true"
       ]
     }
   },
