@@ -99,9 +99,11 @@
       ]
     },
     "UseFargateCondition": {
-      "Fn::Not": {
-        "Ref": "UseCluster"
-      }
+      "Fn::Not": [
+        {
+          "Ref": "UseCluster"
+        }
+      ]
     }
   },
   "Resources": {
