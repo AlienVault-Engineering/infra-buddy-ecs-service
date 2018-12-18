@@ -548,13 +548,24 @@
       }
     },
     "ECSTaskFamily": {
-      "Description": "The task name of the  contribution api",
+      "Description": "The task family",
       "Value": {
         "Fn::Sub": "${AWS::StackName}-ECSTaskFamily"
       },
       "Export": {
         "Name": {
           "Fn::Sub": "${AWS::StackName}-ECSTaskFamily"
+        }
+      }
+    },
+    "ECSTaskRole": {
+      "Description": "The arn of the role of the task",
+      "Value": {
+        "Ref": "TaskIAMRole"
+      },
+      "Export": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-ECSTaskRole"
         }
       }
     }
