@@ -57,6 +57,10 @@
       ],
       "Description": "'true' to use fargate, 'false' to a cluster.",
       "Type": "String"
+    },
+    "TaskAdditionalPolicies": {
+        "Description": "List of additional policy ARNs to add to the TaskIam",
+        "Type": "CommaDelimitedList"
     }
   },
   "Conditions": {
@@ -254,7 +258,10 @@
           ]
         },
         "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+          "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
+          {
+              "Ref": "TaskAdditionalPolicies"
+          }
         ],
         "Path": "/"
       }
