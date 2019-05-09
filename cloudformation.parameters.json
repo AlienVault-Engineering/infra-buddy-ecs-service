@@ -52,5 +52,9 @@
     {
         "ParameterKey": "UseFargate",
         "ParameterValue": "${USE_FARGATE}"
+    },
+    {
+        "ParameterKey": "TaskAdditionalPolicies",
+        "ParameterValue": "${TASK_ADDITIONAL_POLICIES_COMMA_SEPARATED}"
     }
 ]

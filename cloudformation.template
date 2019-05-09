@@ -57,6 +57,10 @@
       ],
       "Description": "'true' to use fargate, 'false' to a cluster.",
       "Type": "String"
+    },
+    "TaskAdditionalPolicies": {
+      "Description": "List of additional ManagedPolicy ARNs to add to the Task execution role 'foo:ARN:bar, foo:ARN:bar'",
+      "Type": "CommaDelimitedList"
     }
   },
   "Conditions": {
@@ -104,6 +108,23 @@
           "Ref": "UseFargate"
         },
         "true"
+      ]
+    },
+    "AdditionalRoleARNS": {
+      "Fn::Not": [
+        {
+          "Fn::Equals": [
+            {
+              "Fn::Join": [
+                "",
+                {
+                  "Ref": "TaskAdditionalPolicies"
+                }
+              ]
+            },
+            "false"
+          ]
+        }
       ]
     }
   },
@@ -253,9 +274,36 @@
             }
           ]
         },
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-        ],
+        "ManagedPolicyArns": {
+          "Fn::If": [
+            "AdditionalRoleARNS",
+            [
+              {
+                "Fn::Split": [
+                  ",",
+                  {
+                    "Fn::Sub": [
+                      "${additionalARN},arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
+                      {
+                        "additionalARN": {
+                          "Fn::Join": [
+                            ",",
+                            {
+                              "Ref": "TaskAdditionalPolicies"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            [
+              "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+            ]
+          ]
+        },
         "Path": "/"
       }
     },
