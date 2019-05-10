@@ -625,16 +625,16 @@
         "Name": {
           "Fn::Sub": "${AWS::StackName}-ECSTaskRole"
         }
+      }
+    },
+    "ECSTaskExecutionRole": {
+      "Description": "The arn of the execution role of the task",
+      "Value": {
+        "Ref": "TaskIAMExecutionRole"
       },
-      "ECSTaskExecutionRole": {
-        "Description": "The arn of the execution role of the task",
-        "Value": {
-          "Ref": "TaskIAMExecutionRole"
-        },
-        "Export": {
-          "Name": {
-            "Fn::Sub": "${AWS::StackName}-ECSTaskExecutionRole"
-          }
+      "Export": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-ECSTaskExecutionRole"
         }
       }
     }
