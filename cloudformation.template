@@ -277,7 +277,6 @@
         "ManagedPolicyArns": {
           "Fn::If": [
             "AdditionalRoleARNS",
-            [
               {
                 "Fn::Split": [
                   ",",
@@ -298,7 +297,7 @@
                   }
                 ]
               }
-            ],
+            ,
             [
               "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
             ]
