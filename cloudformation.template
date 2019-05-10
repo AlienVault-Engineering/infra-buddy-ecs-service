@@ -60,7 +60,7 @@
     },
     "TaskAdditionalPolicies": {
       "Description": "List of additional ManagedPolicy ARNs to add to the Task execution role 'foo:ARN:bar, foo:ARN:bar'",
-      "Type": "CommaDelimitedList"
+      "Type": "String"
     }
   },
   "Conditions": {
