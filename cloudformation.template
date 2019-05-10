@@ -256,7 +256,7 @@
         "Path": "/"
       }
     },
-    "TaskIAMRole": {
+    "TaskIAMExecutionRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -274,34 +274,33 @@
             }
           ]
         },
-        "ManagedPolicyArns": {
-          "Fn::If": [
-            "AdditionalRoleARNS",
-              {
-                "Fn::Split": [
-                  ",",
-                  {
-                    "Fn::Sub": [
-                      "${additionalARN},arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
-                      {
-                        "additionalARN": {
-                          "Fn::Join": [
-                            ",",
-                            {
-                              "Ref": "TaskAdditionalPolicies"
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+        ],
+        "Path": "/"
+      }
+    },
+    "TaskIAMRole": {
+      "Type": "AWS::IAM::Role",
+      "Condition": "AdditionalRoleARNS",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ecs-tasks.amazonaws.com"
                 ]
-              }
-            ,
-            [
-              "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-            ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
           ]
+        },
+        "ManagedPolicyArns": {
+          "Ref": "TaskAdditionalPolicies"
         },
         "Path": "/"
       }
@@ -483,7 +482,18 @@
               "Ref": "AWS::NoValue"
             },
             {
+              "Ref": "TaskIAMExecutionRole"
+            }
+          ]
+        },
+        "TaskRoleArn": {
+          "Fn::If": [
+            "AdditionalRoleARNS",
+            {
               "Ref": "TaskIAMRole"
+            },
+            {
+              "Ref": "AWS::NoValue"
             }
           ]
         },
@@ -606,7 +616,8 @@
       }
     },
     "ECSTaskRole": {
-      "Description": "The arn of the role of the task",
+      "Description": "The arn of the task role ",
+      "Condition":"AdditionalRoleARNS",
       "Value": {
         "Ref": "TaskIAMRole"
       },
@@ -614,7 +625,17 @@
         "Name": {
           "Fn::Sub": "${AWS::StackName}-ECSTaskRole"
         }
+      },
+      "ECSTaskExecutionRole": {
+        "Description": "The arn of the execution role of the task",
+        "Value": {
+          "Ref": "TaskIAMExecutionRole"
+        },
+        "Export": {
+          "Name": {
+            "Fn::Sub": "${AWS::StackName}-ECSTaskExecutionRole"
+          }
+        }
       }
     }
   }
-}
