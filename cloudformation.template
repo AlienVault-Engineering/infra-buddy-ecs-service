@@ -63,7 +63,7 @@
       "Type": "CommaDelimitedList"
     },
     "AssignPublicIP": {
-      "Description": "Whether to assign a public IP for fargate.  ENABLED or DISABLED"
+      "Description": "Whether to assign a public IP for fargate.  ENABLED or DISABLED",
       "Type": "String",
       "AllowedValues": ["ENABLED", "DISABLED"]
     }
@@ -383,7 +383,7 @@
             },
             {
               "AwsvpcConfiguration": {
-                "AssignPublicIp": {"Ref": "AssignPublicIp"}
+                "AssignPublicIp": {"Ref": "AssignPublicIp"},
                 "SecurityGroups": [
                   {
                     "Ref": "FargateSecurityGroup"
