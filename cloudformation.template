@@ -383,7 +383,7 @@
             },
             {
               "AwsvpcConfiguration": {
-                "AssignPublicIp": {"Ref": "AssignPublicIp"},
+                "AssignPublicIp": {"Ref": "AssignPublicIP"},
                 "SecurityGroups": [
                   {
                     "Ref": "FargateSecurityGroup"
