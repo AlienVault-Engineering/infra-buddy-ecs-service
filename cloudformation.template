@@ -61,6 +61,11 @@
     "TaskAdditionalPolicies": {
       "Description": "List of additional ManagedPolicy ARNs to add to the Task execution role 'foo:ARN:bar, foo:ARN:bar'",
       "Type": "CommaDelimitedList"
+    },
+    "AssignPublicIP": {
+      "Description": "Whether to assign a public IP for fargate.  ENABLED or DISABLED"
+      "Type": "String",
+      "AllowedValues": ["ENABLED", "DISABLED"]
     }
   },
   "Conditions": {
@@ -378,7 +383,7 @@
             },
             {
               "AwsvpcConfiguration": {
-                "AssignPublicIp": "DISABLED",
+                "AssignPublicIp": {"Ref": "AssignPublicIp"}
                 "SecurityGroups": [
                   {
                     "Ref": "FargateSecurityGroup"

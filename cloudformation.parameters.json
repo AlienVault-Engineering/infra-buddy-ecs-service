@@ -56,5 +56,10 @@
     {
         "ParameterKey": "TaskAdditionalPolicies",
         "ParameterValue": "${TASK_ADDITIONAL_POLICIES_COMMA_SEPARATED}"
+    },
+    {
+        "ParameterKey": "AssignPublicIP",
+        "ParameterValue": "${FARGATE_ASSIGN_PUBLIC_IP}"
     }
+
 ]

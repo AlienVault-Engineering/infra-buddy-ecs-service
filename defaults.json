@@ -51,5 +51,10 @@
     "type": "property",
     "key": "DEFAULT_LOAD_BALANCER_TARGET",
     "default": false
+  },
+  "FARGATE_ASSIGN_PUBLIC_IP": {
+    "type": "property",
+    "key": "FARGATE_ASSIGN_PUBLIC_IP",
+    "default": "DISABLED"
   }
 }
