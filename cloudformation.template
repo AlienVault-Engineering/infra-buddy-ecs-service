@@ -315,12 +315,12 @@
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "RouteTableId": {
-          "Ref": "PrivateRouteTableA",
-          "SubnetId": {
-            "Fn::ImportValue": {
-              "Fn::Sub": "${VPCStack}-SubnetAPriv"
-            }
-          },
+          "Ref": "PrivateRouteTableA"
+        },
+        "SubnetId": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${VPCStack}-SubnetAPriv"
+          }
         }
       }
     },
@@ -355,11 +355,11 @@
         "RouteTableId": {
           "Ref": "PrivateRouteTableB"
         },
-          "SubnetId": {
-            "Fn::ImportValue": {
-              "Fn::Sub": "${VPCStack}-SubnetBPriv"
-            }
-          },
+        "SubnetId": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${VPCStack}-SubnetBPriv"
+          }
+        }
       }
     },
     "PrivateRouteTableC": {
@@ -393,11 +393,11 @@
         "RouteTableId": {
           "Ref": "PrivateRouteTableC"
         },
-          "SubnetId": {
-            "Fn::ImportValue": {
-              "Fn::Sub": "${VPCStack}-SubnetCPriv"
-            }
-          },
+        "SubnetId": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${VPCStack}-SubnetCPriv"
+          }
+        }
       }
     },
 
