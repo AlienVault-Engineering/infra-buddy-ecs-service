@@ -316,7 +316,11 @@
       "Properties": {
         "RouteTableId": {
           "Ref": "PrivateRouteTableA",
-          "SubnetId": {"Ref": "PrivateSubnetA"}
+          "SubnetId": {
+            "Fn::ImportValue": {
+              "Fn::Sub": "${VPCStack}-SubnetAPriv"
+            }
+          },
         }
       }
     },
@@ -351,7 +355,11 @@
         "RouteTableId": {
           "Ref": "PrivateRouteTableB"
         },
-        "SubnetId": {"Ref": "PrivateSubnetB"}
+          "SubnetId": {
+            "Fn::ImportValue": {
+              "Fn::Sub": "${VPCStack}-SubnetBPriv"
+            }
+          },
       }
     },
     "PrivateRouteTableC": {
@@ -385,7 +393,11 @@
         "RouteTableId": {
           "Ref": "PrivateRouteTableC"
         },
-        "SubnetId": {"Ref": "PrivateSubnetC"}
+          "SubnetId": {
+            "Fn::ImportValue": {
+              "Fn::Sub": "${VPCStack}-SubnetCPriv"
+            }
+          },
       }
     },
 
