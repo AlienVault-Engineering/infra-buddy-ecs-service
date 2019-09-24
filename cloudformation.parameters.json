@@ -60,6 +60,10 @@
     {
         "ParameterKey": "AssignPublicIP",
         "ParameterValue": "${FARGATE_ASSIGN_PUBLIC_IP}"
+    },
+    {
+        "ParameterKey": "HTTPSListenerARNName",
+        "ParameterValue": "${HTTPS_LISTENER_ARN_NAME}"
     }
 
 ]

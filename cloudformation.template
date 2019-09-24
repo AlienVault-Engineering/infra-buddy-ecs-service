@@ -66,6 +66,11 @@
       "Description": "Whether to assign a public IP for fargate.  ENABLED or DISABLED",
       "Type": "String",
       "AllowedValues": ["ENABLED", "DISABLED"]
+    },
+    "HTTPSListenerARNName": {
+      "Description": "Name of exported field from cluster that defines the HTTPs listener - old clusters used different values",
+      "Type": "String",
+      "AllowedValues": ["HTTPSListenerARN", "SecureListenerARN"]
     }
   },
   "Conditions": {
@@ -190,7 +195,7 @@
         ],
         "ListenerArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${ClusterStack}-HTTPSListenerARN"
+            "Fn::Sub": "${ClusterStack}-${HTTPSListenerARNName}"
           }
         },
         "Priority": {

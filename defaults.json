@@ -56,5 +56,10 @@
     "type": "property",
     "key": "FARGATE_ASSIGN_PUBLIC_IP",
     "default": "DISABLED"
+  },
+  "HTTPS_LISTENER_ARN_NAME": {
+    "type": "property",
+    "key": "HTTPS_LISTENER_ARN_NAME",
+    "default": "HTTPSListenerARN"
   }
 }
