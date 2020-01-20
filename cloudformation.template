@@ -292,7 +292,7 @@
     },
     "TaskIAMRole": {
       "Type": "AWS::IAM::Role",
-      "Condition": "AdditionalRoleARNS",
+      "Condition": "UseFargateCondition",
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -310,7 +310,11 @@
           ]
         },
         "ManagedPolicyArns": {
-          "Ref": "TaskAdditionalPolicies"
+          "Fn::Join": [
+            ",",
+            {"Fn::ImportValue": {"Fn::Sub": "${VPCStack}-FargateTaskAccessPolicy"}},
+            {"Ref": "TaskAdditionalPolicies"}
+          ]
         },
         "Path": "/"
       }
@@ -498,7 +502,7 @@
         },
         "TaskRoleArn": {
           "Fn::If": [
-            "AdditionalRoleARNS",
+            "UseFargateCondtion",
             {
               "Ref": "TaskIAMRole"
             },
@@ -589,8 +593,8 @@
     }
   },
   "Outputs": {
-    "ECSService": {
-      "Description": "The service name of the  contribution api",
+    "Service": {
+      "Description": "The service name of the contribution api",
       "Value": {
         "Ref": "ELBService"
       },
@@ -601,7 +605,7 @@
       }
     },
     "ECSServiceName": {
-      "Description": "The service name of the  contribution api",
+      "Description": "The service name of the contribution api",
       "Value": {
         "Fn::GetAtt": [
           "ELBService",
@@ -627,7 +631,7 @@
     },
     "ECSTaskRole": {
       "Description": "The arn of the task role ",
-      "Condition":"AdditionalRoleARNS",
+      "Condition": "UseFargateCondition",
       "Value": {
         "Ref": "TaskIAMRole"
       },
