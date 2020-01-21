@@ -309,13 +309,9 @@
             }
           ]
         },
-        "ManagedPolicyArns": {
-          "Fn::Join": [
-            ",",
-            {"Fn::ImportValue": {"Fn::Sub": "${VPCStack}-FargateTaskAccessPolicy"}},
-            {"Ref": "TaskAdditionalPolicies"}
-          ]
-        },
+        "ManagedPolicyArns": [
+          {"Fn::ImportValue": {"Fn::Sub": "${VPCStack}-FargateTaskAccessPolicy"}},
+        ],
         "Path": "/"
       }
     },
