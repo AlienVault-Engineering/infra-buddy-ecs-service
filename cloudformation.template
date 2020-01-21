@@ -498,7 +498,7 @@
         },
         "TaskRoleArn": {
           "Fn::If": [
-            "UseFargateCondtion",
+            "UseFargateCondition",
             {
               "Ref": "TaskIAMRole"
             },
