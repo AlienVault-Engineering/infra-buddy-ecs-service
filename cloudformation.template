@@ -310,7 +310,7 @@
           ]
         },
         "ManagedPolicyArns": [
-          {"Fn::ImportValue": {"Fn::Sub": "${VPCStack}-FargateTaskAccessPolicy"}},
+          {"Fn::ImportValue": {"Fn::Sub": "${VPCStack}-FargateTaskAccessPolicy"}}
         ],
         "Path": "/"
       }
