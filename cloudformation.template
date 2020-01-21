@@ -640,6 +640,7 @@
     },
     "ECSTaskExecutionRole": {
       "Description": "The arn of the execution role of the task",
+      "Condition": "UseFargateCondition",
       "Value": {
         "Ref": "TaskIAMExecutionRole"
       },
