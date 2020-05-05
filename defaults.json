@@ -25,7 +25,7 @@
   "TASK_HARD_MEMORY": {
     "type": "property",
     "key": "TASK_HARD_MEMORY",
-    "default": 640,
+    "default": 640
   },
   "CONTAINER_PORT": {
     "type": "property",
