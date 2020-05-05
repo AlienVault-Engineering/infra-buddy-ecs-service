@@ -541,7 +541,6 @@
             "Memory": {
                 "Ref": "TaskMemoryLimit"
             },
-
             "Essential": true,
             "MountPoints": [],
             "Name": {
