@@ -22,6 +22,11 @@
     "default": 512,
     "func_name": "transform_fargate_memory"
   },
+  "TASK_HARD_MEMORY": {
+    "type": "property",
+    "key": "TASK_HARD_MEMORY",
+    "default": 640,
+  },
   "CONTAINER_PORT": {
     "type": "property",
     "key": "CONTAINER_PORT",

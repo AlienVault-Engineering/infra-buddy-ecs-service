@@ -38,6 +38,10 @@
         "ParameterValue": "${TASK_SOFT_MEMORY}"
     },
     {
+        "ParameterKey": "TaskMemoryLimit",
+        "ParameterValue": "${TASK_HARD_MEMORY}"
+    },
+    {
         "ParameterKey": "TaskCPU",
         "ParameterValue": "${TASK_CPU}"
     },

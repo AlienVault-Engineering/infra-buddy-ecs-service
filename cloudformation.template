@@ -38,6 +38,10 @@
       "Description": "The amount of memory for use by the task, if using fargate you must specify 0.5GB, 1GB - 30GB, otherwise use MB",
       "Type": "Number"
     },
+    "TaskMemoryLimit": {
+      "Description": "The max amount of memory for use by the task, it gets killed if it goes past it (ECS only)",
+      "Type": "Number"
+    },
     "TaskCPU": {
       "Description": "The amount of cpu units (see ecs) for use by the task, specified in 1024ths of the vCPU. If using fargate you must choose 256, 512, 1024, 2048, 4096",
       "Type": "Number"
@@ -534,6 +538,10 @@
             "MemoryReservation": {
               "Ref": "TaskMemory"
             },
+            "Memory": {
+                "Ref": "TaskMemoryLimit"
+            },
+
             "Essential": true,
             "MountPoints": [],
             "Name": {
