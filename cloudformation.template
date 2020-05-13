@@ -539,7 +539,11 @@
               "Ref": "TaskMemory"
             },
             "Memory": {
-                "Ref": "TaskMemoryLimit"
+              "Fn::If": [
+                "UseCluster",
+                {"Ref": "TaskMemoryLimit"},
+                {"Ref": "AWS::NoValue"}
+              ],
             },
             "Essential": true,
             "MountPoints": [],
