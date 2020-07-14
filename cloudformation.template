@@ -78,7 +78,7 @@
     },
     "HealthGraceSeconds": {
       "Description": "Number of seconds to wait before starting health checks",
-      "Type": "Integer"
+      "Type": "Number"
     }
   },
   "Conditions": {
