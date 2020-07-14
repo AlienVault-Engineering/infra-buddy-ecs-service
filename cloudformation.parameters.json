@@ -68,6 +68,11 @@
     {
         "ParameterKey": "HTTPSListenerARNName",
         "ParameterValue": "${HTTPS_LISTENER_ARN_NAME}"
+    },
+    {
+        "ParameterKey": "HealthGraceSeconds",
+        "ParameterValue": "${HEALTH_GRACE_SECONDS}"
     }
+
 
 ]

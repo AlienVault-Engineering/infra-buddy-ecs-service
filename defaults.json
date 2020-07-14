@@ -66,5 +66,10 @@
     "type": "property",
     "key": "HTTPS_LISTENER_ARN_NAME",
     "default": "HTTPSListenerARN"
+  },
+  "HEALTH_GRACE_SECONDS": {
+    "type": "property",
+    "key": "HEALTH_GRACE_SECONDS",
+    "default": 0
   }
 }

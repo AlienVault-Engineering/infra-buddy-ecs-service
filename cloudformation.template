@@ -75,6 +75,10 @@
       "Description": "Name of exported field from cluster that defines the HTTPs listener - old clusters used different values",
       "Type": "String",
       "AllowedValues": ["HTTPSListenerARN", "SecureListenerARN"]
+    },
+    "HealthGraceSeconds": {
+      "Description": "Number of seconds to wait before starting health checks",
+      "Type": "Integer"
     }
   },
   "Conditions": {
@@ -373,6 +377,7 @@
             }
           ]
         },
+        "HealthCheckGracePeriodSeconds": {"Ref": "HealthGraceSeconds"},
         "LaunchType": {
           "Fn::If": [
             "UseCluster",
@@ -543,7 +548,7 @@
                 "UseCluster",
                 {"Ref": "TaskMemoryLimit"},
                 {"Ref": "AWS::NoValue"}
-              ],
+              ]
             },
             "Essential": true,
             "MountPoints": [],
