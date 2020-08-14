@@ -377,7 +377,13 @@
             }
           ]
         },
-        "HealthCheckGracePeriodSeconds": {"Ref": "HealthGraceSeconds"},
+        "HealthCheckGracePeriodSeconds": {
+          "Fn::If": [
+            "UseCluster",
+            {"Ref": "HealthGraceSeconds"},
+            {"Ref": "AWS::NoValue"},
+          ]
+        },
         "LaunchType": {
           "Fn::If": [
             "UseCluster",
