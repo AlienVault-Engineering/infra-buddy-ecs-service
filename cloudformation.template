@@ -377,11 +377,12 @@
             }
           ]
         },
+
         "HealthCheckGracePeriodSeconds": {
           "Fn::If": [
-            "UseCluster",
+            "AttachLoadBalancer",
             {"Ref": "HealthGraceSeconds"},
-            {"Ref": "AWS::NoValue"},
+            {"Ref": "AWS::NoValue"}
           ]
         },
         "LaunchType": {
